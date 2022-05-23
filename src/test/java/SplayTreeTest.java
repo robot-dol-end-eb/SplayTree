@@ -120,6 +120,18 @@ class SplayTreeTest {
         a.remove(11);
         assertEquals(3,a.size());
     }
+    @Test
+    void search() {
+        SplayTree<Integer> a = new SplayTree<>();
+        a.add(1);
+        a.add(2);
+        a.add(10);
+        a.add(111);
+        assertEquals(a.size(),4);
+        assertEquals(a.search(1),true);
+        assertEquals(a.search(3),false);
+        assertEquals(a.size(),4);
+    }
 
     @Test
     void containsAll() {

@@ -68,6 +68,15 @@ public class SplayTree<T extends Comparable<T>> implements Set<T> {
 
     }
 
+    boolean search( T value) {
+        if(preOrder(root, value)){
+            root = splay(root, value);
+            return true;
+        }
+        return false;
+    }
+
+
 
     private Node splay(Node h, T value) {
         if (h == null) return null;
@@ -148,7 +157,6 @@ public class SplayTree<T extends Comparable<T>> implements Set<T> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean contains(Object o) {
-
         return preOrder(root,(T)o);
     }
 
