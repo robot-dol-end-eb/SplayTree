@@ -69,11 +69,8 @@ public class SplayTree<T extends Comparable<T>> implements Set<T> {
     }
 
     boolean search( T value) {
-        if(preOrder(root, value)){
-            root = splay(root, value);
-            return true;
-        }
-        return false;
+        root = splay(root, value);
+        return value == root.value;
     }
 
 
