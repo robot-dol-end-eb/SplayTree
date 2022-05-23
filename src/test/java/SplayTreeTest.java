@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -105,6 +106,25 @@ class SplayTreeTest {
         a.add(2);
         a.add(111);
         assertEquals(4,a.size());
+    }
+
+    @Test
+    void DFS() {
+        SplayTree<Integer> a = new SplayTree<>();
+        a.add(1);
+        a.add(24);
+        a.add(15);
+        a.add(7);
+        a.add(3);
+        a.add(152);
+        a.add(153);
+        a.add(142);
+        String b = a.DFS(15);
+        String c = a.DFS(142);
+        String d = a.DFS(152);
+        assertEquals(b," -> 142 -> 24 -> 7 -> 15");
+        assertEquals(c,"");
+        assertEquals(d," -> 142 -> 152");
     }
 
     @Test

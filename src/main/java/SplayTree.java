@@ -11,6 +11,8 @@ public class SplayTree<T extends Comparable<T>> implements Set<T> {
         public Node (T value) {
 
             this.value = value;
+            this.left=null;
+            this.right=null;
         }
     }
 
@@ -45,6 +47,7 @@ public class SplayTree<T extends Comparable<T>> implements Set<T> {
         }
 
     }
+
 
 
     public void removeNode(T value) {
@@ -154,20 +157,66 @@ public class SplayTree<T extends Comparable<T>> implements Set<T> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean contains(Object o) {
-        return preOrder(root,(T)o);
+        return search((T)o);
     }
 
-    boolean preOrder(Node root,T o)
-    {
-        if (root != null)
-        {
-            if(root.value == o) {
+    //обход в ширину
+    private boolean preOrder(Node root, T o){
+        if(root != null){
+            if(root.value == o){
                 return true;
             }
-            if (preOrder(root.left,o)) return true;
+            if(preOrder(root.left, o)) return true;
             return preOrder(root.right, o);
         }
         return false;
+    }
+
+
+    public String DFS(T find){
+        ArrayDeque<Node> mas = new ArrayDeque<Node>();
+        List<Node> noWhite = new ArrayList<Node>();
+        List<Node> grey = new ArrayList<Node>();
+        List<Node> black = new ArrayList<Node>();
+        mas.add(root);
+        if(root.value == find) return "";
+        while(!mas.isEmpty()){
+            Node node = mas.peek();
+            if(!grey.contains(node) && !black.contains(node)){
+                noWhite.add(node);
+                grey.add(node);
+                if(node.left != null && !noWhite.contains(node.left)) {
+                    mas.addFirst(node.left);
+                    if(node.left.value.equals(find)){
+                        grey.add(node.left);
+                        break;
+                    }
+                }
+                if(node.right != null && !noWhite.contains(node.right)) {
+                    mas.addFirst(node.right);
+                    if(node.right.value.equals(find)){
+                        grey.add(node.right);
+                        break;
+                    }
+                }
+                continue;
+            }
+            if(grey.contains(node)) {
+                black.add(node);
+                grey.remove(node);
+                mas.remove(node);
+                continue;
+            }
+            if(black.contains(node)) {
+                mas.remove(node);
+            }
+        }
+        StringBuffer  res = new StringBuffer();
+        for(int i = 0; i< grey.size();i++){
+            Node subNode = grey.get(i);
+            res.append(" -> " + subNode.value.toString());
+        }
+        return res.toString();
     }
 
     @Override
@@ -232,6 +281,7 @@ public class SplayTree<T extends Comparable<T>> implements Set<T> {
         return array;
     }
 
+
     @SuppressWarnings("unchecked")
     @Override
     public <T1> T1[] toArray(T1[] a) {
@@ -292,6 +342,7 @@ public class SplayTree<T extends Comparable<T>> implements Set<T> {
         }
         return true;
     }
+
 
     @Override
     public void clear() {
